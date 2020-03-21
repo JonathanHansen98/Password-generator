@@ -21,12 +21,13 @@ generateBtn.addEventListener("click", writePassword);
 
 // Write password to the #password input
 function writePassword() {
-  var length = parseInt(prompt("Length: Please choose a number between 8 and 128."));
+  var length = parseInt(prompt("Length: Please choose a number starting from or equal to 8 and 128."));
 // While loop keeps users from advancing until they select a number between 8 and 128
-  while (length < 8 || length > 128) {
-    alert("Please choose a number between 8 and 128.")
+while (length < 8 || length > 128 || isNaN(length) ) {
+    alert("Please choose a number starting from or equal to 8 and 128.")
     length = prompt("Length: Please choose a number between 8 and 128.");
   };
+
   hasLower = confirm("Include lower case?");
   hasUpper = confirm("Include upper case?");
   hasNum = confirm("Include numbers?");
