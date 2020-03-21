@@ -1,10 +1,10 @@
-// Declaring Global variables and pwGenerator object
+// Declaring Global variables and pwFunctions object
 var hasLower;
 var hasUpper;
 var hasNum;
 var hasSym;
 
-var pwGenerator = {
+var pwFunctions = {
   low: getRandomLower,
   up: getRandomUpper,
   num: getRandomNumber,
@@ -35,7 +35,6 @@ function writePassword() {
   passwordText.value = password;
 };
 
-
 // Create random characters functions
 function getRandomLower() {
   return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
@@ -49,35 +48,28 @@ function getRandomUpper() {
 function getRandomSymbol() {
   var symbols = "!@#$%^&*()-=";
   return symbols[Math.floor(Math.random() * symbols.length)];
-};
+}
 
 function getRandomNumber() {
   return Math.floor(Math.random() * 10)
 }
 
-
-
-
-
 // Generate Password Function
 
-// passing in functions from pwGenerator Object
 function generatePassword(low, up, num, sym, length) {
-  // counts criteria selected, filters out fasle values and creates a new array with only the new values
+// counts criteria and filters out false values in object array
   var count = low + up + num + sym;
+  // Type array is key:value pairs with key being low, up, num, or sym and the value being true or false
   var typeArray = [{ low }, { up }, { num }, { sym }].filter(check => Object.values(check)[0])
-  console.log(typeArray)
-
-// For loop increments at the count of how many criteria was selected
+  // Loop runs for length of password and increments by count of criteria
   for (let index = 0; index < length; index += count) {
-
-// The forEach method executes a function once for each array element, I use it here to create variable 'func' equal to the keys in our typeArray concatenated onto the pwGenerator object. This calls our functions one after the other for the length of our password, creating our random password.
     typeArray.forEach(type => {
+      // Creates a variable equal to the key in our typeArray(which is also keys in the pwFunctions array which allows us to call those functions to build the password)
       var func = Object.keys(type)[0];
-      password += pwGenerator[func]();
+       // Calls our functions in the pwFunctions array and concatatenates them into the password variable
+      password += pwFunctions[func]();
 
     })
   }
-  console.log(password)
   return password;
 }
